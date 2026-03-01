@@ -31,7 +31,14 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build -- --base="/${{ github.event.repository.name }}/"
+        run: |
+          if [ -f public/CNAME ]; then
+            echo "Custom domain detected (public/CNAME). Building with base=/"
+            npm run build -- --base="/"
+          else
+            echo "No custom domain. Building with repo base path."
+            npm run build -- --base="/${{ github.event.repository.name }}/"
+          fi
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
