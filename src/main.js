@@ -580,6 +580,7 @@ async function onBuild() {
   }
 
   buildButton.disabled = true;
+  buildButton.classList.add('loading');
   addRowButton.disabled = true;
   clearRowsButton.disabled = true;
 
@@ -669,6 +670,7 @@ async function onBuild() {
     setStatus(`Failed: ${error.message}`);
     showToast(`Export failed: ${error.message}`, 'error', 4200);
   } finally {
+    buildButton.classList.remove('loading');
     addRowButton.disabled = false;
     clearRowsButton.disabled = false;
     updateBuildButtonState();
